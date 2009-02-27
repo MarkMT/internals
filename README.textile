@@ -37,20 +37,21 @@ But never stop exploring more and more. This is the only
 exercise you need to become a better software engineer. At least,
 this is what I learn again and again.
 
-h2. This handbook sucks balls!
+h2. You may think this handbook sucks
 
 You can always me email your feedback to michael.s.klishin at
 Gmail domain, or PM "michaelklishin at GitHub":http://github.com/michaelklishin.
 
+
 h2. Contributing.
 
-If you want to contribute, fork this "repository":http://github.com/deepthawtz/merb-internals-handbook/tree/master and go ahead.
+If you want to contribute, fork this "repository":http://github.com/michaelklishin/merb-internals-handbook/tree/master and go ahead.
 Pull requests on GitHub are more than welcome. If you use
 patches, make sure you use git format-patch and your patch
 has author name and email address on it.
 
-Do keep in mind that my native language is Russian and thus,
-my English may sound weird to native English speakers. I am sure it does.
+Do keep in mind that the contributions to this book may consist of various
+styles of English language.  
 
 I want to thank the following people:
 
