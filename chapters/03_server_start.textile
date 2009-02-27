@@ -16,34 +16,33 @@ early stage (bootstrap) and second one describes later stage
 
 If you are not interested in all the gory details of framework/server
 operation, feel free to skip this chapter. Make sure you look through
-next one in any case though: some details in the next chapter are
+the next one in any case though: some details in the next chapter are
 not directly related to boot and may help a lot in understanding of Merb,
 yet are simple enough even for beginners.
 
 h1. Diving in
 
 So, command line options (or programmatically passed options) are
-parsed at this point and Merb is ready to start boot process.
+parsed at this point and Merb is ready to start its boot process.
 Right after that Merb does basically 3 things:
 
 
 * Merb.environment and Merb.root are initialized from Merb configuration.
-* Merb checks action you give it in arguments (kill, forced kill, fast redeploy, etc).
-* Merb does early stage work of managing pid files, process privilegies and daemonization.
+* Merb checks the action you give it in arguments (kill, forced kill, fast redeploy, etc).
+* Merb does its early stage work of managing pid files, process privileges and daemonization.
 
-To find all the details, we need to start at Merb.start
+To find all the details, we need to begin with the Merb.start
 method. It can be found in merb-core/lib/merb-core.rb.
 
-On server start Merb has to figure out whether other instance
-is already bound to given port(s), so
-it calculates pid file path, reads it and checks the process if it's alive.
+When the server starts, Merb has to figure out whether there is another instance
+already bound to given port(s), so it calculates the pid file path, reads it and checks if the process is alive.
 
-If not, Merb runs bootloader and starts Rack adapter. This pid file requirement
-means that if you set Merb port, daemonization options or pid file
-location in init file of your application, it would have no effect
-on application start because init file is loaded later in the
+If not, Merb runs the bootloader and starts the Rack adapter. This pid file requirement
+means that if you set the Merb port, daemonization options or pid file
+location in the init file of your application, it would have no effect
+on application start because the init file is loaded later in the
 process. So you must specify port, daemonization option and pid file
-location from command line or in the startup script you may use
+location from the command line or in the startup script you may use
 instead of default merb executable.
 
 Note that during this early stage logger is bound to stdout so

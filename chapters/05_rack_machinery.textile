@@ -24,13 +24,13 @@ usable web servers, and vice versa.".
 In a post-Rails world there is a dozen of Ruby web frameworks and until Rack was
 created by Christian Neukirchen they all were doing duplicate work on web
 servers support and common operations. If your deployment environment runs web server X, you only could use
-frameworks that support X, and no others. Rack gives frameworks and web servers
+frameworks that support X, and no others. Rack gives frameworks and web server
 developers universal unified interface.
 
 
-h2. Get yourself familiar with roots.
+h2. Get yourself familiar with the roots.
 
-I'd highly re-comment reading "original WSGI
+I'd highly recommend reading "original WSGI
 PEP":http://www.python.org/dev/peps/pep-0333 before you continue reading this
 chapter.
 
@@ -43,23 +43,26 @@ Rack environment and returns an array of three elements:
 
  * response status string
  * hash of response headers
- * response body object
+ * response body object     
+ 
+ For example, RackObject.call(env) could respond with:
+    
+   [ 200, {:headers => "values"}, "response body" ]
 
 Response object *must* respond to each, so in Ruby 1.8 string is a valid
 response object and nil is not. This simple requirement means you can return an
 IO object that will stream data to the client.
 
-Rack environment is a hash of CGI-like headers. You can find details in
+The Rack environment is a hash of CGI-like headers. You can find details in
 "Rack specification":http://rack.rubyforge.org/doc/files/SPEC.html.
 
 
 h2. Middleware.
 
-In the middle, after client is connected to the server but before framework
+In the middle, after the client is connected to the server but before framework
 starts serving it there maybe be any number of components called "middleware".
 Merb comes with middleware for serving static files (good for development, in
-production, of course, consider using nginx or something similar), profiling and
-path prefixes handling.
+production, of course, consider using nginx or something similar), profiling and path prefixes handling.
 
 Middleware wraps a Rack application, does some work (profiles, sends notifications,
 tries to serve certain files without triggering the framework, etc) and calls the
@@ -77,11 +80,9 @@ the environment and passes it to Merb dispatcher. Since different web servers
 have different APIs, Merb comes with a bunch of adapters: for Mongrel, Thin,
 Ebb, Thin with Thin-Turbo backend, Evented Mongrel, Swiftiplied Mongrel, FastCGI, CGI, Webrick.
 
-Adapter's responsibility is to start the web server using Merb application configuration
-(port, host, process user and group, etc) and call Merb Rack application when request
-comes in.
+An adapter's responsibility is to start the web server using the Merb application configuration (port, host, process user and group, etc) and call Merb Rack application when a request comes in.
 
-Merb uses common API for all adapters that start and stop web server, and also provides
+Merb uses a common API for all adapters that start and stop web server, and also provides
 spawner/workers run model. Merb runs spawner process that monitors worker processes that
 do actual request handling. This monitoring is built into merb-core, is very lightweight
 and provide bullet proof and thread safe class reloading: when you change your application
@@ -207,9 +208,9 @@ end # Merb
 
 It has one addition over vanilla Rack application: deferred? method. This is used by event-driven servers
 (currently Thin and Ebb) to figure out that request should be deferred (run in a thread) instead of running
-it in main reactor loop. This allows event-driven servers handle long requests without blocking
-the event loop (and thus take best of both worlds: better performance of even-driven
-servers for short requests in the even loop and threading for longer requests).
+it in main reactor loop. This allows event-driven servers to handle long requests without blocking
+the event loop (and thus take the best of both worlds: better performance of even-driven
+servers for short requests in the event loop and threading for longer requests).
 
 Short cut from Thin::Connection source code:
 
@@ -223,19 +224,16 @@ end
 </code></pre>
 
 And yes, this means web server authors should be aware of this feature since
-it goes beyong Rack specification, but at the time of writing (August 2008)
+it goes beyond Rack specification, but at the time of writing (August 2008)
 two major players in Ruby event-driven servers space (Thin and Ebb) do support it.
 
 	 
 h2. Rackup.
 
 Rack has it's "own init" file often referred to as "rackup file". Conventional
-extension of this file is .ru, though you may use .rb or anything else, as long
-as it is a valid Ruby code.
+extension of this file is .ru, though you may use .rb or anything else, as long as it is a valid Ruby code.
 
-Rackup file sets up middleware stack: what middleware runs in what order.
-It usually maps URLs to middleware and applications, and constructed using
-special DSL implemented within a Rack::Builder class.
+A Rackup file sets up the middleware stack: what middleware runs in what order. It usually maps URLs to middleware and applications, and is constructed using a special DSL implemented within a Rack::Builder class.
 
 Rack source code provides the following example of using Rack::Builder:
 
@@ -254,15 +252,13 @@ It stacks two middleware components, Rack::CommonLogger and Rack::ShowExceptions
 and maps URL /lobster to Rack::Lobster application (that shows and
 rotates lobster image).
 
-Keep in mind that Rack middleware run order matters just like filters order
-in Merb application does matter.
+Keep in mind that Rack middleware run order matters just like the order of filters in a Merb application matter.
 
 
 h1. Rack middleware examples.
 
 Rack middleware in Rack source repository is very much like Mongrel handlers
-but with unified application interface. You can use them as examples or in some
-certain situations in production applications.
+but with unified application interface. You can use them as examples or in some certain situations in production applications.
 
 h2. Rack::URLMap.
 
