@@ -17,12 +17,11 @@ An _investigative mind_ should be adopted by the reader of this book. If you are
 not the least but intellectually curious enough to try to understand what is going 
 on in merb-core, there will be no way for you to ever know it. If you are a beginner, 
 the best approach will be to think proactively about the subject matter and try as 
-many various ways to "understand" the information contained inside. A "whatever
-works", or "pragmatic" approach will go a long way.
+many various ways to understand the information contained inside. 
 
 The reader will get the most from this book if it is used as a companion to
 the Merb "source code":http://github.com/wycats/merb/tree/master. In
-fact, why don't you go there right now, fork the repository and clone it to your
+fact, why don't you go to that link right now, fork the repository and clone it to your
 local machine.  When you've done that, take a look around. Now you have a clone
 of the actual subject of our study, you can follow along with the development
 process now and even help with the job of improving the code and documentation.
@@ -47,9 +46,8 @@ There is a lot to know but rather than be frustrated by it, try to
 tackle it systematically. If you need to, take a break from it for a moment or
 two, but then attempt honestly and thoroughly to find a way to understand it. I
 find that keeping a journal of things learned to be helpful. Find what works for
-you and go with that, listen to your Inner Mentor(tm)... whatever, go!
+you and go with that... whatever, go!
 
-I am learning this as I go.
 
 h2. Lets look at a picture
 
@@ -61,9 +59,12 @@ stack_ for Merb, basically the outline for how this book is systematically struc
 Take a look for yourself on "github":http://github.com/deepthawtz/merb/blob/3e95978391e1ad20269a1e5e00ab98b86680a0de/merb-core/docs/merb-core-call-stack-diagram.png
 or, if you have a cloned copy like we recommended, open it yourself. It starts
 with <code>Merb.start(argv = ARGV)</code> and moves from left to right through
-the stages with references to the pieces of the source code. 
-It may be helpful to you to refer to this picture again as you read through this
-handbook.
+the stages. There are even references to the source code of the individual
+method calls. It may be helpful to you to refer to this picture again as you read through this
+handbook. I've put a copy of it
+"here":http://ghettochip.com/images/merb-core-call-stack-diagram.png and a pdf
+version right
+"here":http://ghettochip.com/images/merb-core-call-stack-diagram.pdf
 
 
 h2. What happens when you run the <tt>merb</tt> executable.
