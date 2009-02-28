@@ -22,7 +22,7 @@ yet are simple enough even for beginners.
 
 h1. Diving in
 
-So, command line options (or programmatically passed options) are
+So, command line options (or programmatically passed options to <code>Merb::Config</code>) are
 parsed at this point and Merb is ready to start its boot process.
 Right after that Merb does basically 3 things:
 
@@ -37,33 +37,57 @@ method. It can be found in merb-core/lib/merb-core.rb.
 When the server starts, Merb has to figure out whether there is another instance
 already bound to given port(s), so it calculates the pid file path, reads it and checks if the process is alive.
 
-If not, Merb runs the bootloader and starts the Rack adapter. This pid file requirement
+If no other instance is running on the given ports, Merb runs the bootloader 
+and starts the Rack adapter. This pid file requirement
 means that if you set the Merb port, daemonization options or pid file
 location in the init file of your application, it would have no effect
 on application start because the init file is loaded later in the
-process. So you must specify port, daemonization option and pid file
-location from the command line or in the startup script you may use
-instead of default merb executable.
+process. So you must specify the _port_, _daemonization option_ and _pid file
+location_ from the command line or in the startup script you may use
+instead of the default in the merb executable.
 
-Note that during this early stage logger is bound to stdout so
-even though logger is not really initialized at this point,
-you can see some output.
+Note that during this early stage the logger is bound to stdout, so
+even though it is not really initialized at this point, you can see some output.
 
 You can have a look at implementation of startup code in
 Merb::Server.start (merb-core/lib/merb-core/server.rb).
 
-Most of methods used in server.rb are simple. The most tricky thing
-is probably how daemonization works.
-Merb forks off and child process places itself into a new group,
-becoming a group leader thus detaches from tty.
-Then child process reopens streams: stdin and stdout to /dev/null,
-stderr to stdout, and starts trapping TERM signal.
-Original process exits.
+Most of the methods used in server.rb are simple. The most tricky thing
+is probably how daemonization works. Merb forks off and the child process 
+places itself into a new group, becoming a group leader and thus detaches 
+from tty. Then the child process reopens its streams: stdin and stdout to /dev/null,
+stderr to stdout, and starts trapping TERM signal. The original process exits.
 
-A couple of notes: child process chdirs to wherever Merb.root
-points to, pid file is removed on exit.
+A couple of notes: child process chdirs to wherever Merb.root points to, 
+pid file is removed on exit.
 
 Details can be found in Merb::Server#daemonize (merb-core/lib/merb-core/server.rb).
+<pre><code>
+def daemonize(port)
+  Merb.logger.warn! "About to fork..." if Merb::Config[:verbose]
+    fork do
+      Process.setsid
+      exit if fork
+      Merb.logger.warn! "In #{Process.pid}" if Merb.logger
+      File.umask 0000
+      STDIN.reopen "/dev/null"
+      STDOUT.reopen "/dev/null", "a"
+      STDERR.reopen STDOUT
+      begin
+        Dir.chdir Merb::Config[:merb_root]
+      rescue Errno::EACCES => e
+        Merb.fatal! "You specified Merb root as #{Merb::Config[:merb_root]}, " \
+          "yet the current user does not have access to it. ", e
+      end
+      at_exit { remove_pid_file(port) }
+      Merb::Config[:port] = port
+      bootup
+    end
+rescue NotImplementedError => e
+  Merb.fatal! "Daemonized mode is not supported on your platform. ", e
+end
+
+</pre></code>
 
 To finish this pid files story, here's how Merb figures out if
 the process specified in found pid file is alive:
@@ -89,7 +113,7 @@ Since boot process involves several steps and is important part of
 the framework operation, it takes the whole next chapter.
 
 
-Now let's look at how pid file is stored and removed. It's simple.
+Now let's look at how pid files are stored and removed. It's simple.
 When we store process id to the file (so other programs can
 figure out what Merb process id for certain port is), we
 follow simple convention:
@@ -99,16 +123,15 @@ follow simple convention:
 * Pid file is named as "merb.N.pid" where N is port number.
 * Master process (more about it in the next chapter) is named as "merb.master.pid".
 
-Code for this step can be found in
-Merb::Server.store_details (merb-core/lib/merb-core/server.rb)
-while aforementioned naming scheme implementation is in
-Merb::Server.pid_file (merb-core/lib/merb-core/server.rb)
+Code for this step can be found in Merb::Server.store_details 
+(merb-core/lib/merb-core/server.rb) while the aforementioned naming scheme 
+implementation is in Merb::Server.pid_file (merb-core/lib/merb-core/server.rb)
 
-* Merb calculates path to pid file using port it bound to and
-  simple conventions.
-* If pid file exists, it's removed from the file system.
+* Merb calculates the path to the pid file using the port it bound to and some
+simple conventions
+* If a pid file already exists, it's removed from the file system.
 
-Latter step is implementd in Merb::Server#remove_pid_file.
+The latter step is implementd in Merb::Server#remove_pid_file.
 
 h2. Killing time
 
@@ -122,35 +145,36 @@ Message received, we're moving back
 (Sweet Savage "Killing time")
 
 So far, so good. But what if you ask merb to stop running instances?
-How violent merb gets?
+How violent will merb get?
 
 It turns out not very. Here is how it works in the nutshell:
 
-* Figure out signal to use from the passed action.
-* SIGINT  is used for graceful stop.
+* Figure out what signal to use from the passed action.
+* SIGINT is used for graceful stop.
 * SIGKILL is used for forced stop.
-* Read pids from pid files, send signal to the process with id in it.
+* Read the pids from the existing pid files, send the signal to the process with an id in it.
 
 Details are in Merb::Server.kill_pid (merb-core/lib/merb-core/server.rb).
 
 Some gory details: Ruby can use signal names or numbers. Merb converts numbers
 into names using mapping returned by Signal.list. Before pid file paths
 are calculated, framework layout should be initialized so here we get ahead of
-ourselves a bit and see one of Merb's bootloaders mentioned: BuildFramework
-bootloader. It just sets paths layout: where config dir is, where logs dir is,
-et cetera.
+ourselves a bit and look at one of Merb's bootloaders that gets mentioned:
+*BuildFramework* bootloader. It just sets paths layout: where config dir is, 
+where logs dir is, _et cetera_.
 
-You also can see master process mentioned, it is explained in details in
+You also can see the master process mentioned, it is explained in details in
 the next chapter.
 
-To stop process with given pid file, Merb::Server.kill_pid is used.
-It takes signal to use nd pid file path, and does the following:
+To stop the process in the given pid file, Merb::Server.kill_pid is used.
+It takes a signal to use and the pid file path, and does the following:
 
 * Reads pid.
 * Uses Process.kill to send signal to the pid.
 * Removes pid file.
 * Handles possible exceptions and logs meaninful messages.
 
-You can find code in Merb::Server.kill_pid (merb-core/lib/merb-core/server.rb)
+The default signal is SIGKILL.
+You can find the code in Merb::Server.kill_pid (merb-core/lib/merb-core/server.rb)
 
 To be finished...

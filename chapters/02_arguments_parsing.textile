@@ -18,13 +18,13 @@ Merb.start
 </code></pre>
 
 This means that Merb uses the Mongrel adapter by default and the fun begins in Merb.start.
-What does Merb.start do? 	It parses and sets up application config, then runs boot
+What does Merb.start do? 	It parses and sets up the application config, then runs boot
 and does rackup.
 
 Arguments can be passed as either Hash or array (ARGV in default merb script),
 in the latter case arguments are parsed. In both cases Merb::Config.setup is called.
 
-Merb::Config is a decorator around configuration Hash. It delegates most of
+Merb::Config is a decorator around a configuration Hash. It delegates most of
 the common operations you expect to see on a Hash-like object to the underlying Hash,
 but also has a dozen of default configuration options and means to parse/update
 the configuration.
@@ -161,13 +161,13 @@ Two more things that probably need some explanation are disabled components and
 deferred actions. Disabled components are parts or dependencies of Merb that you
 can leave out: like the native JSON gem (for instance, if your Merb application does
 not use JSON at all, it makes no sense to waste memory). Actually the only component
-in merb-core that can be left out at the moment of writing is JSON gem, set disabled_components to [:json]
+in merb-core that can be left out at the moment of writing _is_ the JSON gem, set disabled_components to [:json]
 if you do not want Merb to load it.
 
-Deferred actions is a way to specify which actions in the application take a long time to execute and should be
-deferred. The idea is that event-driven web servers (Thin, Ebb) that are usually faster than
-Mongrel will spawn a thread to run deferred actions so the event loop is not stopped
-and the server can continue serving requests. Usually very useful for file upload actions.
+_Deferred actions_ are a way to specify which actions in the application you
+would like to defer to a later time--perhaps because they take a long time to execute or you would like specific control over when they are called. The idea is that event-driven web servers (Thin, Ebb), that are usually faster than
+Mongrel, will spawn a thread to run deferred actions so the event loop is not stopped
+and the server can continue serving requests. _Usually very useful for file upload actions._
 
 Verbose options makes Merb print to STDOUT extra information about what's going on.
 If you want really, really verbose information (for instance, want to know what compiled
