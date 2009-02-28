@@ -65,24 +65,24 @@ Details can be found in Merb::Server#daemonize (merb-core/lib/merb-core/server.r
 <pre><code>
 def daemonize(port)
   Merb.logger.warn! "About to fork..." if Merb::Config[:verbose]
-    fork do
-      Process.setsid
-      exit if fork
-      Merb.logger.warn! "In #{Process.pid}" if Merb.logger
-      File.umask 0000
-      STDIN.reopen "/dev/null"
-      STDOUT.reopen "/dev/null", "a"
-      STDERR.reopen STDOUT
-      begin
-        Dir.chdir Merb::Config[:merb_root]
-      rescue Errno::EACCES => e
-        Merb.fatal! "You specified Merb root as #{Merb::Config[:merb_root]}, " \
-          "yet the current user does not have access to it. ", e
-      end
-      at_exit { remove_pid_file(port) }
-      Merb::Config[:port] = port
-      bootup
+  fork do
+    Process.setsid
+    exit if fork
+    Merb.logger.warn! "In #{Process.pid}" if Merb.logger
+    File.umask 0000
+    STDIN.reopen "/dev/null"
+    STDOUT.reopen "/dev/null", "a"
+    STDERR.reopen STDOUT
+    begin
+      Dir.chdir Merb::Config[:merb_root]
+    rescue Errno::EACCES => e
+      Merb.fatal! "You specified Merb root as #{Merb::Config[:merb_root]}, " \
+        "yet the current user does not have access to it. ", e
     end
+    at_exit { remove_pid_file(port) }
+    Merb::Config[:port] = port
+    bootup
+  end
 rescue NotImplementedError => e
   Merb.fatal! "Daemonized mode is not supported on your platform. ", e
 end
