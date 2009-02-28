@@ -86,7 +86,6 @@ def daemonize(port)
 rescue NotImplementedError => e
   Merb.fatal! "Daemonized mode is not supported on your platform. ", e
 end
-
 </pre></code>
 
 To finish this pid files story, here's how Merb figures out if
