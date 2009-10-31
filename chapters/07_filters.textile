@@ -1,4 +1,12 @@
-h1. Filters
+---
+layout: post
+title: "Filters."
+index: "Filters"
+
+previous: "06_request_dispatch"
+next: "08_sessions"
+
+---
 
 Lets take a step back and have a closer look at how filters work.
 Filters are provided by Merb::AbstractController. There are two

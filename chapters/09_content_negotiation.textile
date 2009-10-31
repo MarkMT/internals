@@ -1,4 +1,10 @@
-h1. Content negotiation.
+---
+layout: post
+title: "Content negotiation."
+index: "Content negotiation"
+
+previous: "08_sessions"
+---
 
 Content negotiation is a term used in HTTP specification. HTTP client (like
 a browser) and HTTP server (not really a server itself but applications

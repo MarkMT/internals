@@ -1,4 +1,11 @@
-h1. Start.
+---
+layout: post
+title: "Start."
+index: "Getting Started"
+
+previous: "00_preface"
+next: "02_arguments_parsing"
+---
 
 There are a couple of open source Merb book attempts, but they all explain
 how to use Merb. As an occasional Merb contributor, I always wanted a book that

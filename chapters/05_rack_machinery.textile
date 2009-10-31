@@ -1,4 +1,12 @@
-h1. Rack machinery in Merb.
+---
+layout: post
+title: "Rack machinery in Merb."
+index: "Rack Machinery"
+
+previous: "04_boot"
+next: "06_request_dispatch"
+
+---
 
 Once bootloaders are all run, Merb starts Rack adapter and requests can be
 served from this very moment. Now it's time to have a look how Merb uses Rack

@@ -1,4 +1,11 @@
-h1. Arguments parsing.
+---
+layout: post
+title: "Arguments parsing."
+index: "Parsing Arguments"
+
+previous: "01_start"
+next: "03_server_start"
+---
 
 The executable file <tt>merb</tt> that every Merb user has seen for sure, looks like this:
 

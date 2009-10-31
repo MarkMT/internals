@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>The Merb Internals Handbook :: {{ page.title }}</title>
+    <link rel="stylesheet" href="/stylesheets/merb_book.css" type="text/css" media="screen" title="merb_book" charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+      <div id="header">               
+        <h1>Merb Internals Handbook</h1>
+      </div>  
+      <div id="page">
+        <div class="chapter">
+          <h1>{{ page.title}}</h1>
+          {{ content }}
+          <div class="foot">
+            {% if page.next %}
+              <a href="/chapters/{{page.next}}.html" class="next"><h2>Next</h2></a><br />
+            {% else %}
+              <a href="/index.html" class="next"><h2>Next</h2></a><br />
+            {% endif %}
+
+            {% if page.previous %}
+              <a href="/chapters/{{page.previous}}.html" class="back"><h2>Back</h2></a><br />
+            {% else %}
+              <a href="/index.html" class="back"><h2>Back</h2></a><br />
+            {% endif %}
+
+            <a href="/index.html" class="back"><h2>Home</h2></a><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

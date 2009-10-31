@@ -1,4 +1,12 @@
-h1. Framework boot.
+---
+layout: post
+title: "Framework boot."
+index: "Boot"
+
+previous: "03_server_start"
+next: "05_rack_machinery"
+
+---
 
 To load all framework classes and start serving requests, Merb runs a number of callable
 objects known as bootloaders. Every bootloader in the chain has it's own purpose: some

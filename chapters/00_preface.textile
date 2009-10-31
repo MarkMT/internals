@@ -1,4 +1,10 @@
-h1. Foreword from the author.
+---
+layout: post
+title: "Forward from the author."
+index: "Foreward"
+
+next: "01_start"
+---
 
 h2. Why a hacker's handbook?
 

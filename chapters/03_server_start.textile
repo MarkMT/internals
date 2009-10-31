@@ -1,4 +1,12 @@
-h1. Overview of this chapter
+---
+layout: post
+title: "Server Start."
+index: "Server Start"
+
+previous: "02_arguments_parsing"
+next: "04_boot"
+
+---
 
 What you are going to learn in this chapter:
 

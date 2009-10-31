@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Sessions."
+index: "Sessions"
+
+previous: "07_filters"
+next: "09_content_negotiation"
+
+---
+
 h2. Overview.
 
 Merb supports multiple session stores and lets plugin developers implement their own stores.

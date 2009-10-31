@@ -1,4 +1,12 @@
-h1. Request dispatch.
+---
+layout: post
+title: "Request dispatch."
+index: "Request Dispatch"
+
+previous: "05_rack_machinery"
+next: "07_filters"
+
+---
 
 h2. Briefly.
 
