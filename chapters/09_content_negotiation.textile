@@ -53,8 +53,7 @@ Code lives in lib/merb-core/controller/mixins/responder.rb.
 Here is the method that takes a request and returns requested
 format name:
 
-<code>
-<pre>
+<pre><code>
 def _perform_content_negotiation
   if (fmt = params[:format]) && !fmt.empty?
     accepts = [fmt.to_sym]
@@ -79,8 +78,7 @@ def _perform_content_negotiation
   raise Merb::ControllerExceptions::NotAcceptable,
     (message % [accepts.join(', '), provided_formats.join(', ')])
 end
-</pre>
-</code>
+</code></pre>
 
 Content negotiation involves a sequnce of steps:
 1. if params[:format] is there, and provided, it is used
@@ -93,8 +91,8 @@ Content negotiation involves a sequnce of steps:
 
 Another use of registered formats is to set content type header
 when response is rendered:
-<code>
-<pre>
+
+<pre><code>
 def content_type=(type)
   unless Merb.available_mime_types.has_key?(type)
     raise Merb::ControllerExceptions::NotAcceptable.new("Unknown content_type for response: #{type}") 
@@ -114,8 +112,7 @@ def content_type=(type)
 
   @_content_type
 end
-</pre>
-</code>
+</code></pre>
 
 Note that in 1.0.x every single rendering method uses content_type=
 method internally, so rendering automatically means setting content type
@@ -126,8 +123,7 @@ Accept header parsing is not really elegant but may be of interest
 to the reader so I provide two tiny classes that do the job. It is
 in the same responder.rb.
 
-<code>
-<pre>
+<pre><code>
 class Responder
   def self.parse(accept_header)
     headers = accept_header.split(/,/)
@@ -196,8 +192,7 @@ class AcceptType
     @media_range
   end
 end
-</pre>
-</code>
+</code></pre>
 
 h2. Where to look next.
 

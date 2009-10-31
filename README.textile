@@ -2,7 +2,7 @@ h1. Foreword from the author.
 
 h2. Why a hacker's handbook?
 
-Knowing how tools you use work under the covers is a huge win for every
+Knowing how the tools you use work under the covers is a huge win for every
 developer out there and Merb is small and clean enough for everyone to
 understand it in a short period of time. You can learn a lot about HTTP,
 web frameworks design and even hidden gems of Ruby web servers
@@ -11,8 +11,8 @@ threads and not block the event loop?).
 
 h2. But what if I do not use Merb?
 
-Understanding Merb helps a lot in understanding Ruby on Rails,
-Django, TurboGears and (to some extent)
+Understanding Merb helps a lot in understanding "Ruby on Rails":http://rubyonrails.org,
+"Django":http://djangoproject.com, "TurboGears":http://turbogears.org and (to some extent)
 virtually any other framework out there. I encourage you read
 this little handbook 10 times before you call yourself familiar
 with Merb. I must confess I have no will to do so myself. But
@@ -25,32 +25,33 @@ be. Go to project tracker, find a ticket that relates to some
 area you feel you know best and fix the problem. Contribute
 a patch, make the tool that is freely available to you better,
 understand what it takes to give your work away for free to the
-community and why open source is such a wild fire Internet
+community and why open source is such a wild fire the Internet
 is built upon.
 
 And, by the way, if you find this book useful, do me a favor.
-I need no money from you. Just take my advice seriously.
+I need no money from you, just take my advice seriously:
 Read source code of projects that you rely on, whether it is
-Django, Merb, Nginx, DataMapper, Twisted, PostgreSQL or Matz's Ruby VM. Understand
+Django, Merb, "Nginx":http://wiki.codemongers.com/Main, "DataMapper":http://datamapper.org/doku.php, "Twisted":http://twistedmatrix.com/trac/, "PostgreSQL":http://www.postgresql.org/ or "Matz's Ruby VM":http://ruby-lang.org. Understand
 how they work, get better, and maybe even do a small contribution.
 But never stop exploring more and more. This is the only
 exercise you need to become a better software engineer. At least,
 this is what I learn again and again.
 
-h2. This handbook sucks balls!
+h2. You may think this handbook sucks
 
 You can always me email your feedback to michael.s.klishin at
-Gmail domain, or PM michaelklishin at GitHub.
+Gmail domain, or PM "michaelklishin at GitHub":http://github.com/michaelklishin.
+
 
 h2. Contributing.
 
-If you want to contribute, fork this repository and go ahead.
+If you want to contribute, fork this "repository":http://github.com/michaelklishin/merb-internals-handbook/tree/master and go ahead.
 Pull requests on GitHub are more than welcome. If you use
 patches, make sure you use git format-patch and your patch
 has author name and email address on it.
 
-Do keep in mind that my native language is Russian and thus,
-my English may sound weird to native English speakers. I am sure it does.
+Do keep in mind that the contributions to this book may consist of various
+styles of English language.  
 
 I want to thank the following people:
 
@@ -59,7 +60,7 @@ I want to thank the following people:
 * Jack Dempsey: Did a quick read-through and pointed me where source
   samples in the book needed update.
 * Yehuda Katz: Spent unbelievable amount of time trying to polish my
-  English skills on the IRC, always asking me to not take offense.
+  English skills on IRC, always asking me to not take offense.
 * Oleg Andreev: Does insanely cool stuff with Ruby on a daily basis
   and helps me polish my arguing skills.
 * Emacs contributors provided me with a blessed text editor I can
